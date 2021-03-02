@@ -6,5 +6,5 @@ interface MarkdownRepository
 {
     public function __construct(array $config);
 
-    public function parse($content): string;
+    public function parse(string $content): string;
 }

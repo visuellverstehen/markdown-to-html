@@ -8,7 +8,7 @@ use VV\Markdown\Markdown\MarkdownRepository;
 class Markdown extends Facade
 {
     /**
-     * @method static mixed parse($content)
+     * @method static parse(string $content): string
      *
      * @see \VV\Markdown\CommonMarkRepository
      */

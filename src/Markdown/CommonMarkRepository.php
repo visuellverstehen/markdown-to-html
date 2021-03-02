@@ -13,7 +13,7 @@ class CommonMarkRepository implements MarkdownRepository
         $this->parser = new CommonMarkConverter($config);
     }
 
-    public function parse($content): string
+    public function parse(string $content): string
     {
         return $this->parser->convertToHtml($content);
     }
