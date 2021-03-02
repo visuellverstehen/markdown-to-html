@@ -17,11 +17,11 @@ class ServiceProvider extends BaseServiceProvider
 
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'markdown');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'markdown');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('markdown.php'),
+                __DIR__.'/../config/config.php' => config_path('markdown.php'),
             ], 'markdown');
         }
     }

@@ -11,7 +11,7 @@ return [
     |
     */
 
-//    'parser' => 'commonmark',
+    //    'parser' => 'commonmark',
 
     'settings' => [
         'commonmark' => [
