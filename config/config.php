@@ -11,5 +11,12 @@ return [
     |
     */
 
-    'default' => [],
+//    'parser' => 'commonmark',
+
+    'settings' => [
+        'commonmark' => [
+            //
+        ],
+    ],
+
 ];

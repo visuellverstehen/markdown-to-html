@@ -2,25 +2,27 @@
 
 namespace VV\Markdown;
 
-use Statamic\Providers\AddonServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use VV\Markdown\Markdown\CommonMarkRepository;
+use VV\Markdown\Markdown\MarkdownRepository;
 
-class ServiceProvider extends AddonServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     public function register()
     {
-        parent::register();
+        $this->app->singleton(MarkdownRepository::class, function () {
+            return new CommonMarkRepository(config('markdown.settings.commonmark'));
+        });
     }
 
     public function boot()
     {
-        parent::boot();
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'markdown');
 
-//        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'classify');
-//
-//        if ($this->app->runningInConsole()) {
-//            $this->publishes([
-//                __DIR__ . '/../config/config.php' => config_path('classify.php'),
-//            ], 'classify');
-//        }
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/config.php' => config_path('markdown.php'),
+            ], 'markdown');
+        }
     }
 }
