@@ -1,6 +1,6 @@
 <?php
 
-namespace VV\Classify\Tests;
+namespace VV\Markdown\Tests;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace VV\Classify\Tests\Unit;
+namespace VV\Markdown\Tests\Unit;
 
-use VV\Classify\Tests\TestCase;
+use VV\Markdown\Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
