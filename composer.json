@@ -1,0 +1,44 @@
+{
+  "name": "visuellverstehen/markdown-to-html",
+  "description": "",
+  "keywords": ["laravel", "framework", "markdown", "commonmark", "common mark", "Laravel Markdown", "Laravel-Markdown", "visuellverstehen"],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "VV\\Markdown\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "VV\\Markdown\\Tests\\": "tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "visuellvertsehen"
+    }
+  ],
+  "support": {
+    "email": "kontakt@visuellverstehen.de"
+  },
+  "require": {
+    "php": "^7.4|^8.0",
+    "illuminate/support": "^8.0",
+    "statamic/cms": "3.0.*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.0",
+    "phpunit/phpunit": "^9.3"
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "VV\\Markdown\\ServiceProvider"
+      ]
+    }
+  }
+}
