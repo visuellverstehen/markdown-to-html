@@ -36,7 +36,7 @@ There might be cases, if for example using [TailwindCss](https://tailwindcss.com
 
 ```php 
 // config/markdown.php
-'style' => [
+'styles' => [
     'default' => [
         'h1' => 'text-2xl',
         'p' => 'mb-2',
@@ -55,7 +55,7 @@ Define multiple styles in your config, so you can switch between them and use di
 
 ```php 
 // config/markdown.php
-'style' => [
+'styles' => [
     'default' => [
         'h1' => 'text-2xl',
         'p' => 'mb-2',
