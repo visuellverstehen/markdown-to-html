@@ -48,7 +48,7 @@ class AddCustomHtmlClasses
     {
         $configPath = 'markdown.styles.'.$this->style;
 
-        if (! config()->has($configPath)) {
+        if (!config()->has($configPath)) {
             return [];
         }
 
