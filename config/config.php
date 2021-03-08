@@ -4,23 +4,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Config
+    | Styles
     |--------------------------------------------------------------------------
     |
-    | Some Description
+    | You can add custom classes to your output, if need. More information
+    | can be found in the Readme.md
     |
     */
 
-    //    'parser' => 'commonmark',
-
-    'classes' => [
-        'default' => [
-            'a' => 'linddk',
-            'p' => 'jo',
-        ],
-
-//        'wiki' => [],
+    'styles' => [
+        // 'default' => [
+        //     'h1' => 'your-custom-classes',
+        //     'a' => 'link',
+        // ],
+        // 'wiki' => [],
     ],
+
+    /*
+   |--------------------------------------------------------------------------
+   | Settings
+   |--------------------------------------------------------------------------
+   |
+   | Feel free to pass additional configuration options to the parser.
+   |
+   */
 
     'settings' => [
         'commonmark' => [
