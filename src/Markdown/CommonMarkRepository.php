@@ -18,7 +18,7 @@ class CommonMarkRepository implements MarkdownRepository
     {
         $content = $this->parser->convertToHtml($content);
 
-        return (new addCustomHtmlClasses($content, $this->style))->handle();
+        return (new AddCustomHtmlClasses($content, $this->style))->handle();
     }
 
     public function style(string $style): self
