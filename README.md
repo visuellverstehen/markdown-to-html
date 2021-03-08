@@ -51,7 +51,7 @@ The output would look like this
 ```
 
 #### Multiple styles
-Define multiple styles in your config. 
+Define multiple styles in your config, so you can switch between them and use different stylings in different places of your application. 
 
 ```php 
 // config/markdown.php
@@ -67,9 +67,9 @@ Define multiple styles in your config.
     ...
 ```
 
-Define `style` on your facade to switch between styles. 
+Define `style` to switch between styles. 
 ```php 
-Markdown::style('wiki')->parse($yourContent); // The outpul will be HTML
+Markdown::style('wiki')->parse($yourContent);
 ```
 
 No need to define default. If nothing has been provied, markdown will look for the default style.
