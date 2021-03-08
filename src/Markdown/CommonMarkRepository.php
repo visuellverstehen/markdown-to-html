@@ -7,6 +7,7 @@ use League\CommonMark\CommonMarkConverter;
 class CommonMarkRepository implements MarkdownRepository
 {
     public CommonMarkConverter $parser;
+    public string $style = 'default';
 
     public function __construct(array $config)
     {
@@ -15,6 +16,13 @@ class CommonMarkRepository implements MarkdownRepository
 
     public function parse(string $content): string
     {
-        return $this->parser->convertToHtml($content);
+        $content = $this->parser->convertToHtml($content);
+
+        return (new addCustomHtmlClasses($content, $this->style))->handle();
+    }
+
+    public function style(string $style): self
+    {
+        return $this;
     }
 }

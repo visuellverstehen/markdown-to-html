@@ -13,6 +13,15 @@ return [
 
     //    'parser' => 'commonmark',
 
+    'classes' => [
+        'default' => [
+            'a' => 'linddk',
+            'p' => 'jo',
+        ],
+
+//        'wiki' => [],
+    ],
+
     'settings' => [
         'commonmark' => [
             // Check out the official docs for possible configuration options:

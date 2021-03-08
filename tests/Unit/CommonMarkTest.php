@@ -15,4 +15,26 @@ class CommonMarkTest extends TestCase
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
     }
+
+    /** @test */
+    public function it_can_add_a_html_class_to_a_link()
+    {
+        config()->set('markdown.classes.default.a', 'link');
+
+        $toParse = '[visuellverstehen](https://www.visuellverstehen.de)';
+        $result = '<a class="link" href="https://www.visuellverstehen.de">visuellverstehen</a>';
+
+        $this->assertStringcontainsString($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function it_can_add_a_html_class_to_a_paragraph()
+    {
+        config()->set('markdown.classes.default.p', 'mb-2');
+
+        $toParse = 'some random text';
+        $result = '<p class="mb-2">some random text</p>';
+
+        $this->assertStringcontainsString($result, Markdown::parse($toParse));
+    }
 }
