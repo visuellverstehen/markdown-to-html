@@ -44,7 +44,7 @@ class CommonMarkTest extends TestCase
         $toParse = 'th | th(center) | th(right)
 ---|:----------:|----------:
 td | td         | td';
-        $result =  '<table>';
+        $result = '<table>';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
     }
@@ -59,7 +59,7 @@ td | td         | td';
         $toParse = 'th | th(center) | th(right)
 ---|:----------:|----------:
 td | td         | td';
-        $result =  '<table class="mb-2">';
+        $result = '<table class="mb-2">';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
     }
