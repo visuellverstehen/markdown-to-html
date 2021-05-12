@@ -49,11 +49,9 @@ td | td         | td';
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
     }
 
-
     /** @test */
     public function it_can_add_a_css_class_to_a_table()
     {
-
         config()->set('markdown.styles.default.table', 'mb-2');
 
         $toParse = 'th | th(center) | th(right)
@@ -63,7 +61,6 @@ td | td         | td';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
     }
-
 
     /** @test */
     public function it_can_parse_lists()
@@ -79,7 +76,6 @@ td | td         | td';
 <li>Third item</li>
 <li>Fourth item</li>
 </ul>';
-
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
     }
