@@ -2,7 +2,6 @@
 
 namespace VV\Markdown\Markdown;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class CommonMarkRepository implements MarkdownRepository
