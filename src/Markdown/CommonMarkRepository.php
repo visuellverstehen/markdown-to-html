@@ -2,16 +2,16 @@
 
 namespace VV\Markdown\Markdown;
 
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class CommonMarkRepository implements MarkdownRepository
 {
-    public CommonMarkConverter $parser;
+    public GithubFlavoredMarkdownConverter $parser;
     public string $style = 'default';
 
     public function __construct(array $config)
     {
-        $this->parser = new CommonMarkConverter($config);
+        $this->parser = new GithubFlavoredMarkdownConverter($config);
     }
 
     public function parse(string $content): string
