@@ -37,4 +37,50 @@ class CommonMarkTest extends TestCase
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
     }
+
+    /** @test */
+    public function it_can_parse_tables()
+    {
+        $toParse = 'th | th(center) | th(right)
+---|:----------:|----------:
+td | td         | td';
+        $result =  '<table>';
+
+        $this->assertStringcontainsString($result, Markdown::parse($toParse));
+    }
+
+
+    /** @test */
+    public function it_can_add_a_css_class_to_a_table()
+    {
+
+        config()->set('markdown.styles.default.table', 'mb-2');
+
+        $toParse = 'th | th(center) | th(right)
+---|:----------:|----------:
+td | td         | td';
+        $result =  '<table class="mb-2">';
+
+        $this->assertStringcontainsString($result, Markdown::parse($toParse));
+    }
+
+
+    /** @test */
+    public function it_can_parse_lists()
+    {
+        $toParse = '* First item
+* Second item
+* Third item
+* Fourth item';
+
+        $result = '<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+<li>Fourth item</li>
+</ul>';
+
+
+        $this->assertStringcontainsString($result, Markdown::parse($toParse));
+    }
 }
