@@ -3,6 +3,7 @@
 namespace VV\Markdown\Tests\Unit;
 
 use VV\Markdown\Facades\Markdown;
+use VV\Markdown\Markdown\PrefixImageSources;
 use VV\Markdown\Tests\TestCase;
 
 class CommonMarkTest extends TestCase
@@ -78,5 +79,18 @@ td | td         | td';
 </ul>';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function it_prefixes_relative_image_sources()
+    {
+        config()->set('markdown.images.prefix', 'https://git.visuellverstehen.de/visuel/wiki/-/raw/main/');
+
+        $toParse = '![screenshot_5](/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png)';
+        $result = '<img src="/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png" alt="screenshot_5" />';
+
+        $prefixed = (new PrefixImageSources($result, 'Allgemein'))->handle();
+        var_dump($prefixed);
+        $this->assertStringContainsString('TEST', 'TEST');
     }
 }
