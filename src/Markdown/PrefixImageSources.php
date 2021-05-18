@@ -55,6 +55,7 @@ class PrefixImageSources
     private function insertPrefix(string $source, string $prefix): string
     {
         $source = str_replace('src="', '', $source);
+
         return 'src="'.$prefix.$source;
     }
 
