@@ -40,7 +40,7 @@ class PrefixImageSources
      */
     private function findImageSources(array $htmlImages): void
     {
-        foreach($htmlImages as $image) {
+        foreach ($htmlImages as $image) {
             preg_match_all('/(src)=("[^"]*")/i', $image, $sources);
             $source = collect($sources)->flatten()->toArray()[0];
             if ($source && $this->isAbsolutePath($source)) {
@@ -69,7 +69,7 @@ class PrefixImageSources
             return null;
         }
 
-        return config($configPrefix) . $this->category;
+        return config($configPrefix).$this->category;
     }
 
     /**
