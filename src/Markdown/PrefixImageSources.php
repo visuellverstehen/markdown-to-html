@@ -78,6 +78,12 @@ class PrefixImageSources
      */
     private function isAbsolutePath(string $source): bool
     {
+        if (!function_exists('str_contains')) {
+            function str_contains($haystack, $needle) {
+                return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+            }
+        }
+
         return !str_contains($source, 'https://')
         && !str_contains($source, 'http://')
         && !str_contains($source, 'ftp://');
