@@ -20,7 +20,8 @@ class CommonMarkRepository implements MarkdownRepository
 
         return (new PrefixImageSources(
             (new AddCustomHtmlClasses($content, $this->style))->handle(),
-            $page)
+            $page
+        )
         )->handle();
     }
 

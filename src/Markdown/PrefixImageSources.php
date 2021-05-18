@@ -14,8 +14,7 @@ class PrefixImageSources
     }
 
     /**
-     * Find all image sources in the html content
-     * Replace all absolute paths with a configurable url that is prefixed to it
+     * Find all image sources in the html content and replace all absolute paths with a configurable url that is prefixed to it.
      */
     public function handle()
     {
@@ -27,46 +26,42 @@ class PrefixImageSources
     }
 
     /**
-     * Iterate over the html and find all images
+     * Iterate over the html and find all images.
      */
-    public function findImages(string $htmlContent): array
+    private function findImages(string $htmlContent): array
     {
         preg_match_all('/<img[^>]+>/i', $htmlContent, $result);
 
         return collect($result)->flatten()->toArray();
     }
 
-
     /**
-     * Iterate over all sources and prefix them with the configurable url
+     * Iterate over all sources and prefix them with the configurable url.
      */
-    public function findImageSources(array $htmlImages): void
+    private function findImageSources(array $htmlImages): void
     {
-        $result = [];
-        foreach($htmlImages as $image)
-        {
+        foreach($htmlImages as $image) {
             preg_match_all('/(src)=("[^"]*")/i',$image, $sources);
             $source = collect($sources)->flatten()->toArray()[0];
             if ($source && $this->isAbsolutePath($source)) {
-                $result[] = $source;
-                $this->content = str_replace($source ,$this->insertPrefix($source, $this->getPrefixUrl()), $this->content);
+                $this->content = str_replace($source, $this->insertPrefix($source, $this->getPrefixUrl()), $this->content);
             }
         }
     }
 
     /**
-     * Add prefix to image source
+     * Add prefix to image source.
      */
-    public function insertPrefix(string $source, string $prefix): string
+    private function insertPrefix(string $source, string $prefix): string
     {
         $source = str_replace('src="', '', $source);
         return 'src="'. $prefix . $source;
     }
 
     /**
-     * Load Prefix URL from config
+     * Load Prefix URL from config.
      */
-    public function getPrefixUrl(): ?string
+    private function getPrefixUrl(): ?string
     {
         $configPrefix = 'markdown.images.prefix';
 
@@ -78,7 +73,7 @@ class PrefixImageSources
     }
 
     /**
-     * Check if source is a absolute path or a complete url
+     * Check if source is a absolute path or a complete url.
      */
     private function isAbsolutePath(string $source): bool
     {
