@@ -5,12 +5,10 @@ namespace VV\Markdown\Markdown;
 class PrefixImageSources
 {
     public string $content;
-    public string $category;
 
-    public function __construct(string $content, string $category)
+    public function __construct(string $content)
     {
         $this->content = $content;
-        $this->category = $category;
     }
 
     /**
@@ -70,7 +68,7 @@ class PrefixImageSources
             return null;
         }
 
-        return config($configPrefix).$this->category;
+        return config($configPrefix);
     }
 
     /**

@@ -87,7 +87,7 @@ td | td         | td';
         config()->set('markdown.images.prefix', 'https://git.visuellverstehen.de/visuel/wiki/-/raw/main/');
         $result = '<img src="/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png" alt="screenshot_5" />';
 
-        $prefixed = (new PrefixImageSources($result, 'Allgemein'))->handle();
+        $prefixed = (new PrefixImageSources($result))->handle();
         $this->assertStringContainsString('src="https://git.visuellverstehen.de/visuel/wiki/-/raw/main/Allgemein/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png"', $prefixed);
     }
 
@@ -96,7 +96,7 @@ td | td         | td';
     {
         $result = '<img src="/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png" alt="screenshot_5" />';
 
-        $prefixed = (new PrefixImageSources($result, 'Allgemein'))->handle();
+        $prefixed = (new PrefixImageSources($result))->handle();
         $this->assertEquals($result, $prefixed);
     }
 
@@ -106,7 +106,7 @@ td | td         | td';
         config()->set('markdown.images.prefix', 'https://git.visuellverstehen.de/visuel/wiki/-/raw/main/');
         $result = '<img src="https://www.visuellverstehen.de/fileadmin/_processed_/b/3/csm_frs-webapp-ui-ux-design-entwicklung-webbasierte-anwendung-digital-header-visuellverstehen-flensburg-werbeagentur-kommunikationsagentur-internetagentur_7b5cbde98a.jpg" alt="screenshot_5" />';
 
-        $prefixed = (new PrefixImageSources($result, 'Allgemein'))->handle();
+        $prefixed = (new PrefixImageSources($result))->handle();
         $this->assertStringNotContainsString('https://git.visuellverstehen.de/visuel/wiki/-/raw/main/', $prefixed);
     }
 }
