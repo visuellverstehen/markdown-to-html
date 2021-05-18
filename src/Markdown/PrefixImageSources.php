@@ -14,12 +14,14 @@ class PrefixImageSources
     }
 
     /**
-     * Loop through the rendered html to inject our custom css classes by replacing basic html-tags which
-     * will be enriched with our custom css classes and replaced.
+     * Find all image sources in the html content
+     * Replace all absolute paths with a configurable url that is prefixed to it
      */
     public function handle()
     {
-        $this->findImageSources($this->findImages($this->content));
+        if ($this->getPrefixUrl()) {
+            $this->findImageSources($this->findImages($this->content));
+        }
 
         return $this->content;
     }
@@ -35,6 +37,9 @@ class PrefixImageSources
     }
 
 
+    /**
+     * Iterate over all sources and prefix them with the configurable url
+     */
     public function findImageSources(array $htmlImages): void
     {
         $result = [];
@@ -42,7 +47,7 @@ class PrefixImageSources
         {
             preg_match_all('/(src)=("[^"]*")/i',$image, $sources);
             $source = collect($sources)->flatten()->toArray()[0];
-            if ($source) {
+            if ($source && $this->isAbsolutePath($source)) {
                 $result[] = $source;
                 $this->content = str_replace($source ,$this->insertPrefix($source, $this->getPrefixUrl()), $this->content);
             }
@@ -58,14 +63,27 @@ class PrefixImageSources
         return 'src="'. $prefix . $source;
     }
 
-    public function getPrefixUrl(): string
+    /**
+     * Load Prefix URL from config
+     */
+    public function getPrefixUrl(): ?string
     {
         $configPrefix = 'markdown.images.prefix';
 
         if (!config()->has($configPrefix)) {
-            return '';
+            return null;
         }
 
         return config($configPrefix) . $this->category;
+    }
+
+    /**
+     * Check if source is a absolute path or a complete url
+     */
+    private function isAbsolutePath(string $source): bool
+    {
+        return !str_contains($source, 'https://')
+        && !str_contains($source, 'http://')
+        && !str_contains($source, 'ftp://');
     }
 }

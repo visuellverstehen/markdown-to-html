@@ -14,15 +14,14 @@ class CommonMarkRepository implements MarkdownRepository
         $this->parser = new GithubFlavoredMarkdownConverter($config);
     }
 
-    public function parse(string $content): string
+    public function parse(string $content, string $page = ''): string
     {
         $content = $this->parser->convertToHtml($content);
 
-        /*return (new PrefixImageSources(
-                new AddCustomHtmlClasses($content, $this->style))->handle(),
-                'Allgemein')
-        )->handle();*/
-        return (new AddCustomHtmlClasses($content, $this->style))->handle();
+        return (new PrefixImageSources(
+            (new AddCustomHtmlClasses($content, $this->style))->handle(),
+            $page)
+        )->handle();
     }
 
     public function style(string $style): self
