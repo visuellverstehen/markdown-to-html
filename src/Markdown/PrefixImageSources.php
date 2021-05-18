@@ -41,7 +41,7 @@ class PrefixImageSources
     private function findImageSources(array $htmlImages): void
     {
         foreach($htmlImages as $image) {
-            preg_match_all('/(src)=("[^"]*")/i',$image, $sources);
+            preg_match_all('/(src)=("[^"]*")/i', $image, $sources);
             $source = collect($sources)->flatten()->toArray()[0];
             if ($source && $this->isAbsolutePath($source)) {
                 $this->content = str_replace($source, $this->insertPrefix($source, $this->getPrefixUrl()), $this->content);
@@ -55,7 +55,7 @@ class PrefixImageSources
     private function insertPrefix(string $source, string $prefix): string
     {
         $source = str_replace('src="', '', $source);
-        return 'src="'. $prefix . $source;
+        return 'src="'.$prefix.$source;
     }
 
     /**
