@@ -2,6 +2,8 @@
 
 namespace VV\Markdown\Markdown;
 
+use Illuminate\Support\Str;
+
 class PrefixImageSources
 {
     public string $content;
@@ -40,9 +42,11 @@ class PrefixImageSources
     {
         foreach ($htmlImages as $image) {
             preg_match_all('/(src)=("[^"]*")/i', $image, $sources);
+
             $source = collect($sources)->flatten()->toArray()[0];
-            if ($source && $this->isAbsolutePath($source)) {
-                $this->content = str_replace($source, $this->insertPrefix($source, $this->getPrefixUrl()), $this->content);
+
+            if (! $this->isAbsolutePath($source)) {
+                $this->content = str_replace($source, $this->insertPrefix($source), $this->content);
             }
         }
     }
@@ -50,9 +54,15 @@ class PrefixImageSources
     /**
      * Add prefix to image source.
      */
-    private function insertPrefix(string $source, string $prefix): string
+    private function insertPrefix(string $source): string
     {
-        $source = str_replace('src="', '', $source);
+        $source =str_replace('src="', '', $source);
+
+        if (Str::startsWith($source, '/')) {
+            $source = Str::substr($source, 1);
+        }
+
+        $prefix = $this->getPrefixUrl();
 
         return 'src="'.$prefix.$source;
     }
@@ -62,23 +72,27 @@ class PrefixImageSources
      */
     private function getPrefixUrl(): ?string
     {
-        $configPrefix = 'markdown.images.prefix';
+        $prefix = config('markdown.images.prefix', null);
 
-        if (!config()->has($configPrefix)) {
-            return null;
+        if ($prefix) {
+            $prefix = Str::finish($prefix, '/');
         }
 
-        return config($configPrefix);
+        return $prefix;
     }
 
     /**
      * Check if source is a absolute path or a complete url.
      */
-    private function isAbsolutePath(string $source): bool
+    private function isAbsolutePath(?string $source): bool
     {
-        return !$this->string_contains($source, 'https://')
-        && !$this->string_contains($source, 'http://')
-        && !$this->string_contains($source, 'ftp://');
+        if (! $source) {
+            return false;
+        }
+
+        return $this->string_contains($source, 'https://')
+        || $this->string_contains($source, 'http://')
+        || $this->string_contains($source, 'ftp://');
     }
 
     /**

@@ -44,14 +44,10 @@ class AddCustomHtmlClasses
         return "<{$tag} class=\"{$class}\"";
     }
 
-    private function getStyleset(): array
+    private function getStyleSet(): array
     {
         $configPath = 'markdown.styles.'.$this->style;
 
-        if (!config()->has($configPath)) {
-            return [];
-        }
-
-        return config($configPath);
+        return config($configPath, []);
     }
 }
