@@ -43,8 +43,9 @@ class CommonMarkTest extends TestCase
     public function it_can_parse_tables()
     {
         $toParse = 'th | th(center) | th(right)
----|:----------:|----------:
-td | td         | td';
+                    ---|:----------:|----------:
+                    td | td         | td';
+
         $result = '<table>';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
@@ -56,8 +57,9 @@ td | td         | td';
         config()->set('markdown.styles.default.table', 'mb-2');
 
         $toParse = 'th | th(center) | th(right)
----|:----------:|----------:
-td | td         | td';
+                    ---|:----------:|----------:
+                    td | td         | td';
+
         $result = '<table class="mb-2">';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
