@@ -6,13 +6,13 @@ class AddCustomHtmlClasses
 {
     public string $content;
     public string $style;
-    public array $styleset;
+    public array $styleSet;
 
     public function __construct(string $content, string $style)
     {
         $this->content = $content;
         $this->style = $style;
-        $this->styleset = $this->getStyleSet();
+        $this->styleSet = $this->getStyleSet();
     }
 
     /**
@@ -21,7 +21,7 @@ class AddCustomHtmlClasses
      */
     public function handle(): string
     {
-        foreach ($this->styleset as $tag => $class) {
+        foreach ($this->styleSet as $tag => $class) {
             $this->content = str_replace($this->tagFilter($tag), $this->replaceTag($tag, $class), $this->content);
         }
 
@@ -44,14 +44,10 @@ class AddCustomHtmlClasses
         return "<{$tag} class=\"{$class}\"";
     }
 
-    private function getStyleset(): array
+    private function getStyleSet(): array
     {
         $configPath = 'markdown.styles.'.$this->style;
 
-        if (!config()->has($configPath)) {
-            return [];
-        }
-
-        return config($configPath);
+        return config($configPath, []);
     }
 }

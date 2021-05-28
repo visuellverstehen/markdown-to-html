@@ -3,6 +3,7 @@
 namespace VV\Markdown\Tests\Unit;
 
 use VV\Markdown\Facades\Markdown;
+use VV\Markdown\Markdown\PrefixImageSources;
 use VV\Markdown\Tests\TestCase;
 
 class CommonMarkTest extends TestCase
@@ -42,8 +43,9 @@ class CommonMarkTest extends TestCase
     public function it_can_parse_tables()
     {
         $toParse = 'th | th(center) | th(right)
----|:----------:|----------:
-td | td         | td';
+                    ---|:----------:|----------:
+                    td | td         | td';
+
         $result = '<table>';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
@@ -55,8 +57,9 @@ td | td         | td';
         config()->set('markdown.styles.default.table', 'mb-2');
 
         $toParse = 'th | th(center) | th(right)
----|:----------:|----------:
-td | td         | td';
+                    ---|:----------:|----------:
+                    td | td         | td';
+
         $result = '<table class="mb-2">';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
@@ -78,5 +81,34 @@ td | td         | td';
 </ul>';
 
         $this->assertStringcontainsString($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function it_prefixes_relative_image_sources()
+    {
+        config()->set('markdown.images.prefix', 'https://git.visuellverstehen.de/visuel/wiki/-/raw/main');
+        $result = '<img src="/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png" alt="screenshot_5" />';
+
+        $prefixed = (new PrefixImageSources($result))->handle();
+        $this->assertStringContainsString('src="https://git.visuellverstehen.de/visuel/wiki/-/raw/main/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png"', $prefixed);
+    }
+
+    /** @test */
+    public function it_does_not_prefix_if_config_empty()
+    {
+        $result = '<img src="/uploads/7a9a2cea1fe762a59ae72cb1fd78e7bd/screenshot_5.png" alt="screenshot_5" />';
+
+        $prefixed = (new PrefixImageSources($result))->handle();
+        $this->assertEquals($result, $prefixed);
+    }
+
+    /** @test */
+    public function it_does_not_prefix_complete_urls()
+    {
+        config()->set('markdown.images.prefix', 'https://git.visuellverstehen.de/visuel/wiki/-/raw/main');
+        $result = '<img src="https://www.visuellverstehen.de/fileadmin/_processed_/b/3/csm_frs-webapp-ui-ux-design-entwicklung-webbasierte-anwendung-digital-header-visuellverstehen-flensburg-werbeagentur-kommunikationsagentur-internetagentur_7b5cbde98a.jpg" alt="screenshot_5" />';
+
+        $prefixed = (new PrefixImageSources($result))->handle();
+        $this->assertStringNotContainsString('https://git.visuellverstehen.de/visuel/wiki/-/raw/main', $prefixed);
     }
 }
