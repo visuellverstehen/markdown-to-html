@@ -2,6 +2,7 @@
 
 namespace VV\Markdown\Markdown;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class PrefixImageSources
@@ -32,7 +33,7 @@ class PrefixImageSources
     {
         preg_match_all('/<img[^>]+>/i', $htmlContent, $result);
 
-        return collect($result)->flatten()->toArray();
+        return Arr::flatten($result);
     }
 
     /**
@@ -86,16 +87,8 @@ class PrefixImageSources
      */
     private function isAbsolutePath(string $source): bool
     {
-        return $this->string_contains($source, 'https://')
-        || $this->string_contains($source, 'http://')
-        || $this->string_contains($source, 'ftp://');
-    }
-
-    /**
-     * Helper function for php versions that do not support str_contains.
-     */
-    private function string_contains($haystack, $needle): bool
-    {
-        return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+        return Str::contains($source, 'https://')
+        || Str::contains($source, 'http://')
+        || Str::contains($source, 'ftp://');
     }
 }
