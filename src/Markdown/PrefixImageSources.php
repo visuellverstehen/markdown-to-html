@@ -41,11 +41,11 @@ class PrefixImageSources
     private function findImageSources(array $htmlImages): void
     {
         foreach ($htmlImages as $image) {
-            preg_match_all('/(src)=("[^"]*")/i', $image, $sources);
+            preg_match('/src=(?:"[^"]*")/i', $image, $source);
 
-            $source = collect($sources)->flatten()->toArray()[0];
+            $source = $source[0] ?? null;
 
-            if (! $this->isAbsolutePath($source)) {
+            if ($source && ! $this->isAbsolutePath($source)) {
                 $this->content = str_replace($source, $this->insertPrefix($source), $this->content);
             }
         }
@@ -84,12 +84,8 @@ class PrefixImageSources
     /**
      * Check if source is a absolute path or a complete url.
      */
-    private function isAbsolutePath(?string $source): bool
+    private function isAbsolutePath(string $source): bool
     {
-        if (! $source) {
-            return false;
-        }
-
         return $this->string_contains($source, 'https://')
         || $this->string_contains($source, 'http://')
         || $this->string_contains($source, 'ftp://');
