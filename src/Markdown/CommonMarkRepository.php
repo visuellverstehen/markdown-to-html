@@ -18,11 +18,15 @@ class CommonMarkRepository implements MarkdownRepository
     {
         $content = $this->parser->convertToHtml($content);
 
-        return (new PrefixImageSources((new AddCustomHtmlClasses($content, $this->style))->handle()))->handle();
+        return (new PrefixImageSources(
+            (new AddCustomHtmlClasses($content, $this->style))->handle())
+        )->handle();
     }
 
     public function style(string $style): self
     {
+        $this->style = $style;
+
         return $this;
     }
 }
