@@ -45,7 +45,7 @@ class PrefixImageSources
 
             $source = $source[0] ?? null;
 
-            if ($source && ! $this->isAbsolutePath($source)) {
+            if ($source && !$this->isAbsolutePath($source)) {
                 $this->content = str_replace($source, $this->insertPrefix($source), $this->content);
             }
         }
@@ -56,7 +56,7 @@ class PrefixImageSources
      */
     private function insertPrefix(string $source): string
     {
-        $source =str_replace('src="', '', $source);
+        $source = str_replace('src="', '', $source);
 
         if (Str::startsWith($source, '/')) {
             $source = Str::substr($source, 1);

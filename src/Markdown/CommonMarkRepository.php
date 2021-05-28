@@ -19,7 +19,8 @@ class CommonMarkRepository implements MarkdownRepository
         $content = $this->parser->convertToHtml($content);
 
         return (new PrefixImageSources(
-            (new AddCustomHtmlClasses($content, $this->style))->handle())
+            (new AddCustomHtmlClasses($content, $this->style))->handle()
+        )
         )->handle();
     }
 
