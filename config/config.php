@@ -42,4 +42,17 @@ return [
         ],
     ],
 
+    /*
+   |--------------------------------------------------------------------------
+   | Images
+   |--------------------------------------------------------------------------
+   |
+   | If fetching images from an external repository, you may wish to prefix
+   | your image paths with a prefix to automatically convert a relative url
+   | to an absolute url.
+   |
+   */
+    'images' => [
+        //  'prefix' => 'https://your-prefix.com/',
+    ],
 ];
