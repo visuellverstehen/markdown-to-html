@@ -173,7 +173,7 @@ class CommonMarkTest extends TestCase
     {
         config()->set('markdown.styles.default', [
             'p'    => 'p-3',
-            'pre' => 'mb-4',
+            'pre'  => 'mb-4',
         ]);
 
         $toParse = <<<'EOT'
