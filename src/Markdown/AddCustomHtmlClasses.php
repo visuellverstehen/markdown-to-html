@@ -10,7 +10,7 @@ class AddCustomHtmlClasses
     public string $content;
 
     /**
-     * The chosen style which normaly would be `default`
+     * The chosen style which normaly would be `default`.
      */
     public string $style;
 

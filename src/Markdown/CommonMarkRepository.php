@@ -18,7 +18,7 @@ class CommonMarkRepository implements MarkdownRepository
     public function parse(string $content): string
     {
         $content = $this->parser->convertToHtml($content);
-        $content =  (new PrefixImageSources($content))->handle();
+        $content = (new PrefixImageSources($content))->handle();
 
         return (new AddCustomHtmlClasses($content, $this->style))->handle();
     }
