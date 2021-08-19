@@ -28,8 +28,8 @@ class Tag
 
     public function __construct(string $tags, string $classes)
     {
-        $tags          = $this->convertTagsToArray($tags);
-        $this->count   = count($tags);
+        $tags = $this->convertTagsToArray($tags);
+        $this->count = count($tags);
         $this->classes = $classes;
         $this->setTags($tags);
     }
@@ -47,7 +47,7 @@ class Tag
     */
     private function setTags(array $tags): void
     {
-        $this->tag    = $this->setParentTagAndRemoveFromOriginalArray($tags);
+        $this->tag = $this->setParentTagAndRemoveFromOriginalArray($tags);
         $this->before = $tags;
     }
 

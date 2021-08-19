@@ -132,7 +132,7 @@ class CommonMarkTest extends TestCase
     /** @test */
     public function a_nested_tag_with_already_defined_classes_will_be_parsed_correctly()
     {
-        config()->set('markdown.styles.default', ['a span' => 'text-red',]);
+        config()->set('markdown.styles.default', ['a span' => 'text-red']);
 
         $toParse = '<a href="#">Some<span>thing</span></a>';
         $result = '<p><a href="#">Some<span class="text-red">thing</span></a></p>
@@ -145,7 +145,7 @@ class CommonMarkTest extends TestCase
     public function a_nested_tag_will_be_replaced_and_wont_be_overwritten()
     {
         config()->set('markdown.styles.default', [
-            'p' => 'single',
+            'p'    => 'single',
             'li p' => 'nested',
         ]);
 
