@@ -21,27 +21,40 @@ class AddCustomHtmlClasses
      */
     public function handle(): string
     {
-        foreach ($this->styleSet as $tag => $class) {
-            $this->content = str_replace($this->tagFilter($tag), $this->replaceTag($tag, $class), $this->content);
-        }
+        $tags = collect($this->getStyleSet())
+            ->map(fn ($classes, $tags) => new Tag($tags, $classes))
+            ->sortByDesc('count');
+
+        $tags->each(function ($tag) {
+            $this->content = $this->parse($tag, $this->content);
+        });
 
         return $this->content;
     }
 
-    /**
-     * Build the string we want to replace.
-     */
-    private function tagFilter(string $tag): string
+    public function parse(Tag $tag, string $value): string
     {
-        return "<{$tag}";
+        return preg_replace(
+            $this->defineRegexPattern($tag),
+            $this->defineReplacement($tag),
+            $value
+        );
     }
 
-    /**
-     * Replace the filtered tag and add custom css classes.
-     */
-    private function replaceTag(string $tag, string $class): string
+    private function defineRegexPattern(Tag $tag): string
     {
-        return "<{$tag} class=\"{$class}\"";
+        $pattern = '';
+
+        foreach ($tag->before as $name) {
+            $pattern .= "<{$name}[^>]*>[^<]*";
+        }
+
+        return "/({$pattern})(<{$tag->tag})(?! class)/iU";
+    }
+
+    private function defineReplacement(Tag $tag): string
+    {
+        return "$1<{$tag->tag} class=\"{$tag->classes}\"";
     }
 
     private function getStyleSet(): array

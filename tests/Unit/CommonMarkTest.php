@@ -78,9 +78,94 @@ class CommonMarkTest extends TestCase
 <li>Second item</li>
 <li>Third item</li>
 <li>Fourth item</li>
-</ul>';
+</ul>
+';
 
-        $this->assertStringcontainsString($result, Markdown::parse($toParse));
+        $this->assertEquals($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function a_nested_tag_will_be_recognized()
+    {
+        config()->set('markdown.styles.default', ['li p' => 'text-sm']);
+
+        $toParse = '<li><p>Some text</p></li>';
+        $result = '<li><p class="text-sm">Some text</p></li>
+';
+
+        $this->assertEquals($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function a_nested_tag_with_text_inbetween_will_be_recognized()
+    {
+        config()->set('markdown.styles.default', ['a span' => 'text-red']);
+
+        $toParse = '<a>Some <span>styled</span> text</a>';
+        $result = '<p><a>Some <span class="text-red">styled</span> text</a></p>
+';
+
+        $this->assertEquals($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function a_nested_tag_with_text_inbetween_will_be_recognized_on_multilines_as_well()
+    {
+        config()->set('markdown.styles.default', ['li p' => 'text-bold']);
+
+        $toParse = <<<'EOT'
+                     <li>Bad formatted HTML
+                        <p>Some more</p>
+                     </li>
+                     EOT;
+
+        $result = <<<'EOT'
+                  <li>Bad formatted HTML
+                     <p class="text-bold">Some more</p>
+                  </li>
+
+                  EOT;
+
+        $this->assertEquals($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function a_nested_tag_with_already_defined_classes_will_be_parsed_correctly()
+    {
+        config()->set('markdown.styles.default', ['a span' => 'text-red',]);
+
+        $toParse = '<a href="#">Some<span>thing</span></a>';
+        $result = '<p><a href="#">Some<span class="text-red">thing</span></a></p>
+';
+
+        $this->assertEquals($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
+    public function a_nested_tag_will_be_replaced_and_wont_be_overwritten()
+    {
+        config()->set('markdown.styles.default', [
+            'p' => 'single',
+            'li p' => 'nested',
+        ]);
+
+        $toParse = <<<'EOT'
+                     <li>
+                        <p>I am nested</p>
+                     </li>
+                     
+                     <p>I am not</p>
+                     EOT;
+
+        $result = <<<'EOT'
+                          <li>
+                             <p class="nested">I am nested</p>
+                          </li>
+                          <p class="single">I am not</p>
+
+                          EOT;
+
+        $this->assertEquals($result, Markdown::parse($toParse));
     }
 
     /** @test */
