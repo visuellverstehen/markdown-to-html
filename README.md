@@ -5,6 +5,8 @@
 
 ## Usage
 
+There might be cases, if for example using [TailwindCss](https://tailwindcss.com), where you want to use custom classes to style your output.
+
 ### Getting started
 ```php
 use VV\Markdown\Facades\Markdown;
@@ -12,42 +14,30 @@ use VV\Markdown\Facades\Markdown;
 Markdown::parse($yourContent); // The outpul will be HTML
 ```
 
-### Output styling
-
-#### Basic
-You can always format your markdown by using a wrapper of some kind. 
-```css
-.markdown h1 {
-    font-weight: bold;
-    ...
-} 
+### Configuration
+To add or change style sets, simply add or change an array with classes that should be added to the HTML tag.
+```php
+'default' => [
+    'h1' => 'text-2xl',
+    'a'  => 'link hover:text-blue',
+    'p' => 'mb-5',
+    'li p' => 'mb-2 ml-4',
+],
 ```
+*This example uses TailwindCSS, but you can use whatever kind of CSS you want.*
 
+### Example Output
 ```html
-<div class="markdown">
-    <!-- Auto generated output -->
-    <h1>Headline</h1>
-    <p>Some text</p>
-</div>
-```
+<h1 class="text-2xl">A headline</h1>
+<p class="mb-5">Some text</p>
 
-### Custom classes
-There might be cases, if for example using [TailwindCss](https://tailwindcss.com), where you want to use custom classes to style your output. 
+<ul>
+    <li><p class="mb-2 ml-4">A list item</p></li>
+    <li><p class="mb-2 ml-4">A list item</p></li>
+    <li><p class="mb-2 ml-4"><a class="link hover:text-blue" href="#">Klick me</a></p></li>
+</ul>
 
-```php 
-// config/markdown.php
-'styles' => [
-    'default' => [
-        'h1' => 'text-2xl',
-        'p' => 'mb-2',
-    ],
-    ...
-```
-
-The output would look like this
-```html
-<h1 class="text-2xl">Headline</h1>
-<p class="mb-2">Some text</p>
+<p class="mb-5">Another text</p>
 ```
 
 #### Multiple styles
@@ -73,7 +63,6 @@ Markdown::style('wiki')->parse($yourContent);
 ```
 
 No need to define default. If nothing has been provied, markdown will look for the default style.
-
 
 
 # More about us
