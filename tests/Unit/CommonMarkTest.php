@@ -169,6 +169,34 @@ class CommonMarkTest extends TestCase
     }
 
     /** @test */
+    public function a_single_tag_will_not_replace_another_tag()
+    {
+        config()->set('markdown.styles.default', [
+            'p'    => 'p-3',
+            'pre' => 'mb-4',
+        ]);
+
+        $toParse = <<<'EOT'
+                     <p>
+                         <pre>
+                             <code>Amazing code</code>
+                         </pre>
+                     </p>
+                     EOT;
+
+        $result = <<<'EOT'
+                    <p class="p-3">
+                        <pre class="mb-4">
+                            <code>Amazing code</code>
+                        </pre>
+                    </p>
+
+                    EOT;
+
+        $this->assertEquals($result, Markdown::parse($toParse));
+    }
+
+    /** @test */
     public function it_prefixes_relative_image_sources()
     {
         config()->set('markdown.images.prefix', 'https://git.visuellverstehen.de/visuel/wiki/-/raw/main');

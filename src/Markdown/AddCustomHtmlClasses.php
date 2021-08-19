@@ -68,7 +68,7 @@ class AddCustomHtmlClasses
             $pattern .= "<{$name}[^>]*>[^<]*";
         }
 
-        return "/({$pattern})(<{$tag->tag})(?! class)/iU";
+        return "/({$pattern})(<{$tag->tag})(?! class|\w)/iU";
     }
 
     /**
