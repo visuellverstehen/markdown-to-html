@@ -11,7 +11,7 @@ There might be cases, if for example using [TailwindCss](https://tailwindcss.com
 ```php
 use VV\Markdown\Facades\Markdown;
 
-Markdown::parse($yourContent); // The outpul will be HTML
+Markdown::parse($yourContent); // The output will be HTML
 ```
 
 ### Configuration
