@@ -15,9 +15,12 @@ Markdown::parse($yourContent); // The output will be HTML
 ```
 
 ### Configuration
-First you will need to publish your `markdown.php` file:
-```php artisan vendor:publish```
-Then choose the mardown option.
+First you will need to publish your vendor assets:
+
+
+```$ php artisan vendor:publish```
+
+Then choose the mardown option. this will create a ```config/markdown.php``` file in your app that you can modify to set your configuration.
 
 To add or change style sets, simply add or change an array with classes that should be added to the HTML tag.
 ```php
