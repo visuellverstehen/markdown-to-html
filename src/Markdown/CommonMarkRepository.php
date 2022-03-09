@@ -2,7 +2,11 @@
 
 namespace VV\Markdown\Markdown;
 
-use League\CommonMark\GithubFlavoredMarkdownConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\MarkdownConverter;
 
 class CommonMarkRepository implements MarkdownRepository
 {
@@ -12,7 +16,12 @@ class CommonMarkRepository implements MarkdownRepository
 
     public function __construct(array $config)
     {
-        $this->parser = new GithubFlavoredMarkdownConverter($config);
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new GithubFlavoredMarkdownExtension());
+        $environment->addExtension(new ExternalLinkExtension());
+
+        $this->parser = new MarkdownConverter($environment);
     }
 
     public function parse(string $content): string
