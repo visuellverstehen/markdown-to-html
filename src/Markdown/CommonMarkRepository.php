@@ -6,7 +6,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\MarkdownConverter;
 
 class CommonMarkRepository implements MarkdownRepository
 {
@@ -21,7 +21,7 @@ class CommonMarkRepository implements MarkdownRepository
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
         $environment->addExtension(new ExternalLinkExtension());
 
-        $this->parser = new CommonMarkConverter($environment);
+        $this->parser = new MarkdownConverter($environment);
     }
 
     public function parse(string $content): string
