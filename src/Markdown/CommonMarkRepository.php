@@ -10,7 +10,7 @@ use League\CommonMark\MarkdownConverter;
 
 class CommonMarkRepository implements MarkdownRepository
 {
-    public GithubFlavoredMarkdownConverter $parser;
+    public MarkdownConverter $parser;
 
     public string $style = 'default';
 
