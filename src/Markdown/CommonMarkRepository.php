@@ -21,7 +21,7 @@ class CommonMarkRepository implements MarkdownRepository
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
         foreach ($config as $key => $value) {
-            if ($value['internal_hosts'] !== config('app.url')) {
+            if ($key === "external_link") {
                 $environment->addExtension(new ExternalLinkExtension());
             }
         }
