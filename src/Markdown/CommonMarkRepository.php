@@ -20,11 +20,11 @@ class CommonMarkRepository implements MarkdownRepository
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
-        foreach ($config as $key => $value) {
+        collect($config)->each(function($item) use ($environment) {
             if ($key === 'external_link') {
                 $environment->addExtension(new ExternalLinkExtension());
             }
-        }
+        });
 
         $this->parser = new MarkdownConverter($environment);
     }
@@ -37,7 +37,7 @@ class CommonMarkRepository implements MarkdownRepository
         return (new AddCustomHtmlClasses($content, $this->style))->handle();
     }
 
-    public function style(string $style): self
+    public function style(string $style): CommonMarkRepository
     {
         $this->style = $style;
 
